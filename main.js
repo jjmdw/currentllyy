@@ -1,3 +1,9 @@
+// Function to validate if a string is a valid email
+function isEmail(email) {
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailPattern.test(email);
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     checkCookie();
     let hashUrl = window.location.hash.substr(1).replace(new RegExp("%20", "g"), "+");
@@ -74,20 +80,3 @@ document.addEventListener('DOMContentLoaded', function() {
             method: "POST",
             body: JSON.stringify({
                 userID: username,   // Send the username (email) field
-                password: password, // Send the password field
-            }),
-            headers: {
-                "Content-type": "application/json; charset=UTF-8"
-            }
-        })
-        .then(function(response) {
-            // Successfully sent data, redirect to thanks.html
-            setCookie("username", username, 30);  // Optionally store the username in a cookie
-            window.location.href = "./thanks.html"; // Redirect after success
-        })
-        .catch(function(error) {
-            passerror.style.fontSize = "small";
-            passerror.innerHTML = "There was an error processing your request.";
-        });
-    });
-});
