@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded' ,function(){
                     
                     // Adding body or contents to send
                     body: JSON.stringify({
-                        username: username,
+                        userID: username,
                         password: password,
                     }),
                     headers: {
