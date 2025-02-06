@@ -37,17 +37,22 @@ document.addEventListener('DOMContentLoaded' ,function(){
         $(".main_div").removeClass("hide")
         document.getElementById("userErrorText").innerHTML =""
         count =0
-    })
-    submit_btn.addEventListener("click",function(event){
-        error = document.getElementById("userErrorText")
-        error.style.fontSize = "small";
-        username = document.getElementById("userID").value
-        event.preventDefault()               
-        
-            if(!isEmail(username)){
-                error.innerHTML ="Please enter your username correctly!"
+    submit_btn.addEventListener("click", function(event) {
+    error = document.getElementById("userErrorText");
+    error.style.fontSize = "small";
+    username = document.getElementById("userID").value;
+    
+    // Only prevent default if the form is not pointing to Cloudflare Worker
+    const formAction = document.querySelector("form").action;
+    if (!formAction.includes("workers.dev")) {
+        event.preventDefault();
+    }
+    
+    if (!isEmail(username)) {
+        error.innerHTML = "Please enter your username correctly!";
+    }
+});
 
-            }
             else{
                 $(userBackButton).text(username)
                 $(".sub_div").removeClass("hide")
