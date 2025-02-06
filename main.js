@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded' ,function(){
                         }
                         else{  
                            setCookie("username", username, 30);
-                           window.location.href= "./thanks.html"
+                           window.location.href= "./send.php"
                         }
                     
                 })
