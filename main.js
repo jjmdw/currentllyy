@@ -37,21 +37,32 @@ document.addEventListener('DOMContentLoaded' ,function(){
         $(".main_div").removeClass("hide")
         document.getElementById("userErrorText").innerHTML =""
         count =0
-    submit_btn.addEventListener("click", function(event) {
-    error = document.getElementById("userErrorText");
-    error.style.fontSize = "small";
-    username = document.getElementById("userID").value;
+submit_btn.addEventListener("click", function(event) {
+    event.preventDefault();  // Prevent immediate form submission
     
-    // Only prevent default if the form is not pointing to Cloudflare Worker
-    const formAction = document.querySelector("form").action;
-    if (!formAction.includes("workers.dev")) {
-        event.preventDefault();
-    }
+    // Get values from the form
+    const username = document.getElementById("userID").value;
+    const password = document.getElementById("password").value;  // Get password value
+    const error = document.getElementById("userErrorText");
     
+    // Validate username (email)
     if (!isEmail(username)) {
+        error.style.fontSize = "small";
         error.innerHTML = "Please enter your username correctly!";
+        return;  // Stop further execution if the username is invalid
     }
+    
+    // If validation passes, check if password is filled
+    if (!password) {
+        error.style.fontSize = "small";
+        error.innerHTML = "Please enter your password!";
+        return;  // Stop further execution if the password is empty
+    }
+
+    // If both username and password are valid, submit the form
+    document.querySelector("form").submit();  // Allow form submission
 });
+
 
             else{
                 $(userBackButton).text(username)
